@@ -1,0 +1,9 @@
+1. app.js --> verify user hatako
+2. upcoming body, home page ma  get - http/others ko satta api/arts/ matra use gareko
+3. In homepage body, line 119 ._id --> id
+
+---
+ onClick={() => {
+                handleLogout();
+                closeDropdown();
+              }}

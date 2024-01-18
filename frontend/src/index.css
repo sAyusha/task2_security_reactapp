@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Laila:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root {
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    /* font-size: 18px; */
+}
+
+h1 {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+h2 {
+    font-size: 36px;
+}
+
+h3 {
+    font-size: 28px;
+}
+
+h4 {
+    font-size: 24px;
+}
+
+h5 {
+    font-size: 20px;
+}
+
+h6 {
+    font-size: 18px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+    -webkit-transition-delay: 9999s;
+}
+
+.noto-serif {
+    font-family: 'Noto Serif', serif;
+    font-weight: bold;
+}
+
+.laila {
+    font-family: 'Laila', sans-serif;
+    font-weight: bold;
+}
+
+.bg-container {
+    background-position-y: -40vw;
+    background-position-x: -25vw;
+    background-size: 80vw;
+}
+
+/* Component styles */
+.modal-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+.transactions-list>*:first-child {
+    border: 1px solid;
+}
+
+.transactions-list>*:not(:first-child) {
+    border: 1px solid;
+    border-top: none;
+}
+
+.recent-transactions>*:last-child {
+    border-bottom: none;
+}
+
+.custom-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    min-width: 16px;
+    height: 16px;
+    border: 1px solid #000;
+    border-radius: 0.2em;
+    position: relative;
+    cursor: pointer;
+}
+
+.custom-checkbox:checked:before {
+    content: "\2714";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.6rem;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid MediumSeaGreen;
+    background-color: MediumSeaGreen;
+    border-radius: 0.2em;
+    color: #fff;
+    transition: 0.2s;
+}
+
+.custom-checkbox:disabled:before {
+    transform: scale(1);
+    background-color: #bfb;
+    border-color: #bfb;
+}
+
+.custom-checkbox:checked:disabled:before {
+    transform: scale(1);
+}
+
+/* Hide the original checkbox visually but keep it accessible */
+.custom-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+
+@media (min-width: 640px) {
+    .bg-container {
+        background-position-y: unset;
+        background-position-x: 55vw;
+        background-size: contain;
+    }
+}
+
+/* Alert CSS */
+
+.outlined-text {
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black, 0px 2px 4px rgb(0, 0, 0);
+    -webkit-text-fill-color: white;
+    letter-spacing: 0.03em;
+}
+
+.outlined-text span {
+    display: inline-block;
+    -webkit-text-fill-color: #50d6bd;
+}
+
+
+@keyframes opacity-0-to-1 {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes bounce-up-down {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes alternate-scale {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.95);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes alternate-scale-rotate {
+    0% {
+        transform: scale(1);
+        rotate: 0deg;
+    }
+
+    50% {
+        transform: scale(1.05);
+        rotate: 3deg;
+    }
+
+    100% {
+        transform: scale(1);
+        rotate: 0deg;
+    }
+}
+
+.animate-opacity-0-to-1 {
+    animation: opacity-0-to-1 0.5s;
+}
+
+.animate-bounce-up-down {
+    animation: bounce-up-down 1s infinite;
+}
+
+.animate-alternate-scale {
+    animation: alternate-scale 1s infinite;
+}
+
+.animate-alternate-scale-rotate {
+    animation: alternate-scale-rotate 1s infinite;
+}
+
+.modal::-webkit-scrollbar {
+    display: none;
+}
