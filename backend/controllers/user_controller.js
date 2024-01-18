@@ -144,7 +144,8 @@ const loginUser = async (req, res, next) => {
 
     // If everything is fine, generate and send the JWT token
     const payload = {
-      id: user._id,
+      id: user.id,
+      // id: user._id,
       username: user.username,
       // fullname: user.fullname,
     };

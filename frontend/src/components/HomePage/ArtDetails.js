@@ -31,25 +31,31 @@ const ArtDetails = ({ userInfo, fetchUserInfo, art }) => {
   const [usersInfo, setUsersInfo] = useState();
   const [userData, setUserData] = useState({});
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3001/api/users/${artDetail[0]?.user}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-      .then((res) => {
-        setArtOwner(res.data.data);
-        setIsSaved(res.data.data[0].savedArts.includes(artId));
-        console.log(res.data.data[0]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [artDetail]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://localhost:3001/api/users/${artDetail[0]?.user}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       setArtOwner(res.data.data);
+  //       setIsSaved(res.data.data[0].savedArts.includes(artId));
+  //       console.log(res.data.data[0]);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [artDetail]);
 
+  
   const { artId } = useParams();
-
+  
+  useEffect(() => {
+    if (currentUser) {
+      setIsSaved(currentUser?.data[0].savedArts.includes(artId));
+    }
+  }, [currentUser, artId]);
   useEffect(() => {
     axios
       .get(`http://localhost:3001/api/arts/${artId}`, {
@@ -161,78 +167,70 @@ const ArtDetails = ({ userInfo, fetchUserInfo, art }) => {
 
   const handleSave = async (e) => {
     e.stopPropagation();
+
     try {
       const token = localStorage.getItem("token");
       if (!token) {
+        // Handle case when user is not logged in
         return;
+      }
+
+      if (isSaved) {
+        // Remove saved arts
+        await axios.delete(`http://localhost:3001/api/arts/save/${artId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setUser((prevUser) => {
+          const updatedSavedArts =
+            prevUser?.data[0].savedArts.filter(
+              (artId) => artId !== artId
+            );
+          return {
+            ...prevUser,
+            data: [
+              {
+                ...prevUser.data[0],
+                savedArts: updatedSavedArts,
+              },
+            ],
+          };
+        });
+        setIsSaved(false);
       } else {
-        if (isSaved) {
-          // Remove saved art
-          await axios
-            .delete(`http://localhost:3001/api/arts/save/${art.id}`, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            })
-            .then((res) => {
-              setIsSaved(false);
-              // setSuccessMessage("Art removed from alerts!");
+        // Save the artpost
+        await axios.post(
+          `http://localhost:3001/api/arts/save/${artId}`,
+          null,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-              axios
-                .get(
-                  `http://localhost:3001/api/users/${currentUser?.data[0].id}`,
-                  {
-                    headers: {
-                      Authorization: `Bearer ${localStorage.getItem("token")}`,
-                    },
-                  }
-                )
-                .then((res) => {
-                  setUser(res.data);
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        } else {
-          // Add alert
-          await axios
-            .post(`http://localhost:3001/api/arts/save/${art.id}`, null, {
-              headers: {
-                Authorization: `Bearer ${token}`,
+        setUser((prevUser) => {
+          const updatedSavedArts = [
+            ...prevUser?.data[0].savedArts,
+            artId,
+          ];
+          return {
+            ...prevUser,
+            data: [
+              {
+                ...prevUser.data[0],
+                savedArts: updatedSavedArts,
               },
-            })
-            .then((res) => {
-              setIsSaved(true);
-              // setSuccessMessage("Art added to alerts!");
-
-              axios
-                .get(
-                  `http://localhost:3001/api/users/${currentUser?.data[0].id}`,
-                  {
-                    headers: {
-                      Authorization: `Bearer ${localStorage.getItem("token")}`,
-                    },
-                  }
-                )
-                .then((res) => {
-                  setUser(res.data);
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-            })
-            .catch((err) => {
-              // setError(err.response.data.error);
-              console.log(err);
-            });
-        }
+            ],
+          };
+        });
+        setIsSaved(true);
       }
     } catch (error) {
       console.log(error);
+      // Handle error
     }
   };
 

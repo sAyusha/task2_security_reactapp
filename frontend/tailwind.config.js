@@ -15,6 +15,7 @@ module.exports = {
       // Common Colors
       black: "#000",
       white: "#fff",
+      yellow: "#82960C",
 
       // Light Mode Colors
       "light-bg": "#F9F4F0",
@@ -27,18 +28,17 @@ module.exports = {
       "purple-lighter-black-20": "#8B62CC",
       "purple-lighter-white-80": "#EFE4FF",
 
-      "pale-yellow": "#FFFFCC",
+      "pale-yellow": "#CCBC29",
       "pale-red": "#8B0000",
       "lime-green": "#32CD32",
       "pale-yellow-80": "#FEFAED",
       "pale-red-80": "#FBEAEA",
-      "pale-green": "#EAFBEE",
-      "error-red": "#FF4C4C",
-
+      "pale-green": "#0CA64C",
       "dark-slate": "#5F646D",
       "light-slate": "#D3D3D3",
       "dark-slate-85": "#E7E8E9",
-      "pearl-white": "FAF4F0",
+      "pearl-white": "#FAF4F0",
+      "error-red": "#FF4D4D",
 
       // Dark Mode Colors
       "dark-bg": "#161616",

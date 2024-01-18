@@ -102,13 +102,11 @@ const IndividualSavedArt = ({ artId }) => {
         window.location.href = `/art-details/${art.data[0]?.id}`;
       }}
     >
-      <button className="absolute top-3 right-2" onClick={removeSave}>
+       <button className="absolute rounded-xl bg-light-slate hover:bg-pink-light p-2 top-3 right-2" onClick={removeSave}>
         {isSaved ? (
-          <BsBookmarkFill className="w-5 h-5 cursor-pointer text-white transition duration-300" />
+          <BsBookmarkFill className="text-2xl w-5 h-5" />
         ) : (
-          <div className="rounded-[50px] border border-light-color p-2 bg-light-color">
-            <BsBookmark className="w-5 h-5 cursor-pointer text-white transition duration-300" />
-          </div>
+          <BsBookmark className="text-2xl w-5 h-5" />
         )}
       </button>
 

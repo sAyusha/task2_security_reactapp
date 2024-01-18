@@ -81,7 +81,7 @@ export default function SignupPage() {
       case 1:
         return "pale-red";
       case 2:
-        return "blue-dark";
+        return "pale-yellow";
       case 3:
         return "pale-green";
       case 4:
