@@ -32,7 +32,8 @@ module.exports = {
       "lime-green": "#32CD32",
       "pale-yellow-80": "#FEFAED",
       "pale-red-80": "#FBEAEA",
-      "pale-green-80": "#EAFBEE",
+      "pale-green": "#EAFBEE",
+      "error-red": "#FF4C4C",
 
       "dark-slate": "#5F646D",
       "light-slate": "#D3D3D3",
