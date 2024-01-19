@@ -1,14 +1,55 @@
 const User = require("../models/user");
 const Bid = require("../models/bid");
 const Art = require("../models/art");
+const crypto = require('crypto');
+const algorithm = 'aes-256-cbc';
+const secretKey = 'asdfghjklminubyvtcrxe0864213579'; // Replace with your secret key
+const iv = crypto.randomBytes(16);
+
+const encrypt = (data) => {
+  const cipher = crypto.createCipheriv(algorithm, Buffer.from(secretKey), iv);
+  let encrypted = cipher.update(JSON.stringify(data), 'utf-8', 'hex');
+  encrypted += cipher.final('hex');
+  return {
+    iv: iv.toString('hex'),
+    encryptedData: encrypted,
+  };
+};
+
+const decrypt = (data) => {
+  const decipher = crypto.createDecipheriv(
+    algorithm,
+    Buffer.from(secretKey),
+    Buffer.from(data.iv, 'hex')
+  );
+  let decrypted = decipher.update(data.encryptedData, 'hex', 'utf-8');
+  decrypted += decipher.final('utf-8');
+  return JSON.parse(decrypted);
+};
+
+// const getAllBids = async (req, res, next) => {
+//   try {
+//     // Retrieve all bids from the database
+//     const allBids = await Bid.find();
+
+//     // Return the array of all bids
+//     return res.status(200).json({ data: allBids });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({ message: "Internal server error" });
+//   }
+// };
 
 const getAllBids = async (req, res, next) => {
   try {
     // Retrieve all bids from the database
     const allBids = await Bid.find();
 
-    // Return the array of all bids
-    return res.status(200).json({ data: allBids });
+    // Encrypt the bid data before sending it in the response
+    const encryptedBids = allBids.map(encrypt);
+
+    // Return the array of all encrypted bids
+    return res.status(200).json({ data: encryptedBids });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
