@@ -11,15 +11,23 @@ import UpdatesBody from "../components/UpdatesPage/UpdatesBody";
 import Header from "../components/common/Header";
 import Sidebar from "../components/common/Sidebar";
 import { UserContext } from "../context/UserContext";
+import Dashboard from "../components/Admin/Dashboard";
 
 const MainPage = () => {
   // State variables
   const [activeTab, setActiveTab] = useState("home");
   const [selectedArt, setSelectedArt] = useState(null);
+
   const [userInfo, setUserInfo] = useState(null);
 
   // Context
   const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    if (user?.data[0]?.userType === "admin") {
+      setActiveTab("dashboard");
+    }
+  }, [user]);
 
   // Handler functions
   const handleTabClick = (tabName) => {
@@ -31,31 +39,31 @@ const MainPage = () => {
     setSelectedArt(art);
     setActiveTab("artDetails");
   };
-    // Fetch user info on component mount
-    const fetchUserInfo = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (token) {
-          // If token exists, fetch the user data
-          const response = await axios.get(`http://localhost:3001/api/users/`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          setUserInfo(response.data);
-        } else {
-          // If token doesn't exist, set user state to null
-          setUserInfo(null);
-        }
-      } catch (error) {
-        console.log(error);
-        setUserInfo(null); // Set user state to null in case of an error
+  // Fetch user info on component mount
+  const fetchUserInfo = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (token) {
+        // If token exists, fetch the user data
+        const response = await axios.get(`http://localhost:3001/api/users/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUserInfo(response.data);
+      } else {
+        // If token doesn't exist, set user state to null
+        setUserInfo(null);
       }
-    };
-  
-    useEffect(() => {
-      fetchUserInfo();
-    }, []);
+    } catch (error) {
+      console.log(error);
+      setUserInfo(null); // Set user state to null in case of an error
+    }
+  };
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
 
   // // Fetch user info on component mount
   // const fetchUserInfo = async (userId) => {
@@ -92,7 +100,7 @@ const MainPage = () => {
   const tabConfig = {
     home: {
       header: "Auctions",
-      body: () => (
+      body: (
         <HomePageBody
           handleArtClick={handleArtClick}
           userInfo={userInfo}
@@ -104,7 +112,7 @@ const MainPage = () => {
     },
     search: {
       header: "Search",
-      body: () => (
+      body: (
         <SearchBody
           handleArtClick={handleArtClick}
           userInfo={userInfo}
@@ -116,7 +124,7 @@ const MainPage = () => {
     },
     create: {
       header: "Post Your Art",
-      body: () => (
+      body: (
         <AddArtBody
           handleArtClick={handleArtClick}
           userInfo={userInfo}
@@ -126,22 +134,22 @@ const MainPage = () => {
     },
     upcoming: {
       header: "Explore Upcoming",
-      body: () => <UpcomingBody />,
+      body: <UpcomingBody />,
     },
     updates: {
       header: "Updates",
-      body: () => <UpdatesBody />,
+      body: <UpdatesBody />,
     },
     profile: {
       header: "Profile",
-      body: () => <ProfileBody />,
+      body: <ProfileBody />,
     },
     settings: {
-      body: () => <SettingsBody />,
+      body: <SettingsBody />,
     },
     artDetails: {
       header: "Art Details",
-      body: () => (
+      body: (
         <ArtDetails
           art={selectedArt}
           userInfo={userInfo}
@@ -151,7 +159,7 @@ const MainPage = () => {
     },
     dashboard: {
       header: "Admin Dashboard",
-      body: <></>,
+      body: <Dashboard />,
     },
   };
 
@@ -160,12 +168,16 @@ const MainPage = () => {
 
   return (
     <div className="flex w-full min-h-[100vh] bg-pink-lighter dark:bg-dark-bg">
+
       <Sidebar activeTab={activeTab} handleTabClick={handleTabClick} />
 
       <div className="flex flex-col justify-between text-black dark:text-white p-6 w-full md-2:mr-[280px] md-2:flex-1 md-2:relative md-2:py-0">
         <div>
-          <Header currentPage={header} handleTabClick={handleTabClick} />
-          {body()}
+          <Header
+            currentPage={header}
+            handleTabClick={handleTabClick}
+          />
+          {body}
         </div>
       </div>
     </div>

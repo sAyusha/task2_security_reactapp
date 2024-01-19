@@ -11,22 +11,25 @@ exports.getDashboardSummary = async (req, res) => {
     const totalBid = await Bid.countDocuments();
     const totalOrder = await Order.countDocuments();
 
-    // // Get counts for pending, accepted, and declined exchange requests
-    // const pendingExchangeRequests = await ExchangeRequest.countDocuments({
-    //   status: "pending",
-    // });
-    // const acceptedExchangeRequests = await ExchangeRequest.countDocuments({
-    //   status: "accepted",
-    // });
-    // const declinedExchangeRequests = await ExchangeRequest.countDocuments({
-    //   status: "declined",
-    // });
+    // Get counts for pending, winning, and losing bid status
+    const pendingBidStatus = await User.countDocuments({
+      bidStatus: "Pending",
+    });
+    const winningBidStatus = await User.countDocuments({
+      bidStatus: "Winner",
+    });
+    const losingBidStatus = await User.countDocuments({
+      bidStatus: "Loser",
+    });
 
     res.json({
       totalUsers,
       totalArts,
       totalBid,
       totalOrder,
+      pendingBidStatus,
+      winningBidStatus,
+      losingBidStatus,
     });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });

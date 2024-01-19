@@ -112,6 +112,23 @@ const Sidebar = ({ activeTab, handleTabClick }) => {
           </p> */}
 
           <ul className="flex items-center justify-between px-6 py-4 border-t md-2:flex-col md-2:gap-2 md-2:items-start md-2:border-none md-2:p-0">
+            {user?.data[0].userType === "admin" && (
+              <li
+                className={`relative hover:text-blue-dark vsm:hover:dark:text-pink-light md-2:hover:dark:text-blue-dark cursor-pointer transition duration-200 ease-linear md-2:text-black md-2:flex md-2:items-center md-2:gap-3 md-2:w-full md-2:px-4 md-2:py-2.5 md-2:rounded-md-2 md-2:hover:bg-pink-light ${activeTab === "dashboard"
+                  ? "text-blue-dark vsm:dark:text-pink-light md-2:dark:text-blue-dark md-2:text-blue-dark md-2:bg-pink-light !impo"
+                  : "text-black dark:text-white"
+                  }`}
+                onClick={() => handleTabClick("dashboard")}
+              >
+                <RxDashboard className="w-6 h-6" />
+                <p className="hidden font-semibold md-2:block">Dashboard</p>
+
+                {activeTab === "dashboard" && (
+                  <div className="md-2:bg-black vsm:dark:bg-pink md-2:dark:bg-white dark:w-[3px] h-full w-[2px] absolute left-0"></div>
+                )}
+              </li>
+            )}
+
             <li
               className={`relative hover:text-blue-dark vsm:hover:dark:text-pink-light md-2:hover:dark:text-blue-dark cursor-pointer transition duration-200 ease-linear md-2:text-black md-2:flex md-2:items-center md-2:gap-3 md-2:w-full md-2:px-4 md-2:py-2.5 md-2:rounded-md-2 md-2:hover:bg-pink-light ${activeTab === "home"
                 ? "text-blue-dark vsm:dark:text-pink-light md-2:dark:text-blue-dark md-2:text-blue-dark md-2:bg-pink-light !impo"
@@ -142,27 +159,6 @@ const Sidebar = ({ activeTab, handleTabClick }) => {
               )}
             </li>
 
-            {user?.data[0].userType === "admin" && (
-              <li
-                className={`relative hover:text-blue-dark vsm:hover:dark:text-pink-light md-2:hover:dark:text-blue-dark cursor-pointer transition duration-200 ease-linear md-2:text-black md-2:flex md-2:items-center md-2:gap-3 md-2:w-full md-2:px-4 md-2:py-2.5 md-2:rounded-md-2 md-2:hover:bg-pink-light ${activeTab === "dashboard"
-                  ? "text-blue-dark vsm:dark:text-pink-light md-2:dark:text-blue-dark md-2:text-blue-dark md-2:bg-pink-light !impo"
-                  : "text-black dark:text-white"
-                  }`}
-                onClick={() => {
-                  handleTabClick("dashboard");
-                  localStorage.setItem("activeTab", "dashboard");
-                }}
-              >
-                <RxDashboard className="w-6 h-6" />
-                <p className="hidden font-semibold md-2:block">Dashboard</p>
-
-                {activeTab === "dashboard" && (
-                  <div className="md-2:bg-black vsm:dark:bg-pink md-2:dark:bg-white dark:w-[3px] h-full w-[2px] absolute left-0"></div>
-                )}
-
-              </li>
-            )}
-
             {user?.data[0].userType !== "admin" && (
               <>
                 <li
@@ -184,20 +180,24 @@ const Sidebar = ({ activeTab, handleTabClick }) => {
               </>
             )}
 
-            <li
-              className={`relative hover:text-blue-dark vsm:hover:dark:text-pink-light md-2:hover:dark:text-blue-dark cursor-pointer transition duration-200 ease-linear md-2:text-black md-2:flex md-2:items-center md-2:gap-3 md-2:w-full md-2:px-4 md-2:py-2.5 md-2:rounded-md-2 md-2:hover:bg-pink-light ${activeTab === "create"
-                ? "text-blue-dark vsm:dark:text-pink-light md-2:dark:text-blue-dark md-2:text-blue-dark md-2:bg-pink-light !impo"
-                : "text-black dark:text-white"
-                }`}
-              onClick={() => handleTabClick("create")}
-            >
-              <MdAddCircleOutline className="w-6 h-6 dark:text-white" />
-              <p className="hidden font-semibold md-2:block">Create</p>
+            {user?.data[0].userType === "admin" && (
+              <>
+                <li
+                  className={`relative hover:text-blue-dark vsm:hover:dark:text-pink-light md-2:hover:dark:text-blue-dark cursor-pointer transition duration-200 ease-linear md-2:text-black md-2:flex md-2:items-center md-2:gap-3 md-2:w-full md-2:px-4 md-2:py-2.5 md-2:rounded-md-2 md-2:hover:bg-pink-light ${activeTab === "create"
+                    ? "text-blue-dark vsm:dark:text-pink-light md-2:dark:text-blue-dark md-2:text-blue-dark md-2:bg-pink-light !impo"
+                    : "text-black dark:text-white"
+                    }`}
+                  onClick={() => handleTabClick("create")}
+                >
+                  <MdAddCircleOutline className="w-6 h-6 dark:text-white" />
+                  <p className="hidden font-semibold md-2:block">Create</p>
 
-              {activeTab === "create" && (
-                <div className="md-2:bg-black vsm:dark:bg-pink md-2:dark:bg-white dark:w-[3px] h-full w-[2px] absolute left-0"></div>
-              )}
-            </li>
+                  {activeTab === "create" && (
+                    <div className="md-2:bg-black vsm:dark:bg-pink md-2:dark:bg-white dark:w-[3px] h-full w-[2px] absolute left-0"></div>
+                  )}
+                </li>
+              </>
+            )}
 
             {user?.data[0].userType !== "admin" && (
               <> <li

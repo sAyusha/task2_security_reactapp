@@ -126,7 +126,7 @@ export default function SignupPage() {
             <p className='text-sm text-dark-slate'>The faster you fill up, the faster chance to win!!!</p>
             <div className="flex flex-col space-y-3">
               <form className="flex flex-col gap-4">
-                {error && <span className="text-pale-red">{error}</span>}
+                {error && <span className="text-pale-red font-bold">{error}</span>}
 
                 {message && <span className="text-pale-green">{message}</span>}
 

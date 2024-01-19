@@ -29,12 +29,24 @@ const registerUser = async (req, res, next) => {
       });
     }
 
+    // Check for phone number length
+    const minimum = 10;
+    if (phone.length < minimum) {
+      return res.status(400).json({
+        error: `Phone number should at least be ${minLength} numbers.`,
+      });
+    }
     // Check for password length
     const minLength = 8;
     if (password.length < minLength) {
       return res.status(400).json({
         error: `Password length should be at least ${minLength} characters.`,
       });
+    }
+
+    const existingPhoneNo = await User.findOne({ phone: phone });
+    if (existingPhoneNo) {
+      return res.status(400).json({ error: "phone number is already in use" });
     }
 
     const existingUser = await User.findOne({ username: username });

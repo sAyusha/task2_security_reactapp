@@ -8,6 +8,7 @@ const userRoutes = require("./routes/user_routes");
 const artRoutes = require("./routes/art_routes");
 const orderRoutes = require("./routes/order_routes");
 const bidRoutes = require("./routes/bid_routes");
+const adminRoutes = require("./routes/admin_routes");
 const { verifyUser } = require("./middlewares/auth");
 const cors = require("cors");
 

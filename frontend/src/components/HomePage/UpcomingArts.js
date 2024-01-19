@@ -194,7 +194,7 @@ const UpcomingArts = ({
           </p>
           <p className="text-lg font-medium vsm:text-base">
             Upcoming Date:{" "}
-            {new Date(art?.localEndingDate).toLocaleDateString("en-US")}
+            {new Date(art?.upcomingDate).toLocaleDateString("en-US")}
           </p>
           <p className="text-lg font-medium vsm:text-base">{art?.creator}</p>
         </div>

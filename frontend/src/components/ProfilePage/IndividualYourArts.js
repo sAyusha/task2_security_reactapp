@@ -122,7 +122,10 @@ const IndividualYourArts = ({ art }) => {
 
               <div className="flex justify-center gap-6 mt-6">
                 <button
-                  onClick={handleConfirmDelete}
+                   onClick={() => {
+                    handleConfirmDelete();
+                    handleCloseDeleteModal();
+                  }}
                   className="px-4 py-2 rounded-lg bg-blue-dark text-white hover:text-lime-green hover:bg-black-75 text-base font-medium transition duration-300"
                 >
                   Delete

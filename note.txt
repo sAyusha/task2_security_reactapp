@@ -7,6 +7,10 @@ for admin
 2. added admin routes
 3. in app.js added admin route
 4. added admin controller
+5. added admin in components
+6. main page --> useEffect, user?.data.userType 
+7. sidebar.js --> user?.data.userType === "admin"
+admin login: kenndie, Vict0ri@$ecret#9009
 
 ---
  onClick={() => {

@@ -116,7 +116,7 @@ const HomepageBody = ({
           <div className="grid mt-2 gap-6 md:grid-cols-3 md:gap-8 2xl:grid-cols-3">
             {upcomingArts.map((art) => (
               <UpcomingArts
-                // key={art._id}
+                key={art.id}
                 art={art}
                 handleArtClick={handleArtClick}
                 fetchUserInfo={fetchUserInfo}

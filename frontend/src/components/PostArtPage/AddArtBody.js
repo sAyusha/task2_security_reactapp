@@ -68,6 +68,7 @@ const AddArtBody = () => {
   };
 
   const handleDeadlineChange = (e) => {
+    
     setEndingDate(e.target.value);
     setUpcomingDate(e.target.value);
   };
