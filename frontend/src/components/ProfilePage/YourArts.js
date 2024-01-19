@@ -16,7 +16,10 @@ const YourArts = ({ myArts }) => {
       ) : (
         <div className="grid items-stretch grid-cols-2 gap-6 vsm:grid-cols-2 sm:grid-cols-2 md-2:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-5">
           {myArts.map((art) => (
-            <IndividualYourArts key={art._id} art={art} />
+            <IndividualYourArts
+              key={art.id}
+              art={art}
+            />
           ))}
         </div>
       )}

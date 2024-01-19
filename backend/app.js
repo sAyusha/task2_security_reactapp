@@ -1,7 +1,10 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-// const morgan = require("morgan");
+const morgan = require("morgan");
+const path = require("path");
+const fs = require("fs");
+const rfs = require("rotating-file-stream");
 
 // Route files
 const userRoutes = require("./routes/user_routes");
@@ -30,6 +33,19 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.static("public"));
+
+// ensure the log directory exists
+const logDirectory = path.join(__dirname, "logs");
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+
+// create a rotating write stream
+const accessLogStream = rfs.createStream("access.log", {
+  interval: "1d", // rotate daily
+  path: logDirectory,
+});
+
+// use morgan middleware with the rotating file streat for logging
+app.use(morgan("combined", { stream: accessLogStream }));
 
 app.get("/", (req, res) => {
   res.send("Hello Node");

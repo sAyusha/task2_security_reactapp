@@ -5,18 +5,13 @@ import { IoMdAdd } from "react-icons/io";
 // import { TotalArtsContext } from "../../context/TotalArtsContext";
 import { UserContext } from "../../context/UserContext";
 
-const UserInfo = ({ myArts }) => {
+const UserInfo = ({ myArts, activeTab, handleTabClick }) => {
   const { user, setUser } = useContext(UserContext);
   const [profilePicture, setProfilePicture] = useState(null);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
-  const [activeTab, setActiveTab] = useState("home");
 
   const [error, setError] = useState(null); // AddedState variable to store the total number of books
   const fileInputRef = useRef(null);
-
-  const handleTabClick = (tabName) => {
-    setActiveTab(tabName);
-  };
 
   const handleProfilePictureChange = (e) => {
     setProfilePicture(e.target.files[0]);
@@ -84,11 +79,11 @@ const UserInfo = ({ myArts }) => {
               : "https://st3.depositphotos.com/9998432/13335/v/600/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg"
           }
           alt=""
-          className="border border-light-slate w-[250px] h-[200px] md:w-[250px] vsm:min-w-[150px] rounded-[50%] object-fill"
+          className="border border-light-slate w-[250px] h-[200px] md:w-[200px] vsm:min-w-[150px] rounded-[50%] object-cover"
         />
 
         <div
-          className="relative flex items-center justify-center cursor-pointer right-[0.5rem] bottom-[15px] vsm:right-[-6.5rem] vsm:bottom-[40px] md:right-[-11rem] md:bottom-[40px] text-black bg-pink-light-hover w-8 h-8 rounded-full hover:bg-blue-dark hover:text-white transition duration-200"
+          className="relative flex items-center justify-center cursor-pointer right-[0.5rem] bottom-[15px] vsm:right-[-11rem] vsm:bottom-[40px] md:right-[-9rem] md:bottom-[40px] text-black bg-pink-light-hover w-8 h-8 rounded-full hover:bg-blue-dark hover:text-white transition duration-200"
           onClick={openFileInput}
         >
           <input
@@ -141,14 +136,15 @@ const UserInfo = ({ myArts }) => {
 
           <div className="flex justify-between md:justify-between vsm:justify-start items-center gap-1 vsm:gap-4 md-2:gap-1">
             <div className="md:text-black dark:text-white font-semibold px-1 py-1 text-[20px]">
-              {user?.data[0]?.followers?.length}
+              0
             </div>
             <p className="text-[20px] font-medium">Followers</p>
           </div>
 
           <div className="flex justify-between md:justify-between vsm:justify-start items-center gap-1  vsm:gap-4 md-2:gap-1">
             <div className="text-black dark:text-white font-semibold px-1 py-1 text-[20px]">
-              {user?.data[0]?.followingArtists?.length}
+              {/* {user?.data[0]?.followingArtists?.length} */}
+              0
             </div>
             <p className="text-[20px] font-medium">Following</p>
           </div>

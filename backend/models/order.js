@@ -26,10 +26,10 @@ const orderSchema = new mongoose.Schema(
       },
     ],
     shippingAddress: {
-      fullname: {
-        type: String,
-        required: true,
-      },
+      // fullname: {
+      //   type: String,
+      //   required: true,
+      // },
       address: {
         type: String,
         required: true,
@@ -49,7 +49,7 @@ const orderSchema = new mongoose.Schema(
     paymentMethod:{
       type: String,
       enum: ['COD', 'Khalti'],
-      default: 'COD'
+      default: 'Khalti'
       // required: true,
     },
     paymentResult: {

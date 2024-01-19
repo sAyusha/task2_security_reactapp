@@ -37,7 +37,8 @@ const IndividualYourArts = ({ art }) => {
     setIsDeleteModalOpen(false);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = (e) => {
+    // e.stopPropagation();
     axios
       .delete(`http://localhost:3001/api/arts/${art.id}`, {
         headers: {

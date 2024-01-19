@@ -33,7 +33,7 @@ const ArtDetails = ({ userInfo, fetchUserInfo, art }) => {
 
   // useEffect(() => {
   //   axios
-  //     .get(`http://localhost:3001/api/users/${artDetail[0]?.user}`, {
+  //     .get(`http://localhost:3001/api/users/${art?.user}`, {
   //       headers: {
   //         Authorization: `Bearer ${localStorage.getItem("token")}`,
   //       },
@@ -455,7 +455,7 @@ const ArtDetails = ({ userInfo, fetchUserInfo, art }) => {
           {isModalOpen && (
             <AddressModal
               artDetail={artDetail}
-              artOwner={artOwner}
+              // artOwner={artOwner}
               amount={amount}
               onClose={() => setIsModalOpen(false)} // Close the modal when the close button is clicked
             />

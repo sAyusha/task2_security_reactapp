@@ -1,7 +1,10 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
+import { MdDelete } from "react-icons/md";
+import { IoClose } from "react-icons/io5";
 // import { getTimeDifference } from "../../utils/dateUtils";
+import { TotalArtsContext } from "../../context/TotalArtsContext";
 
 const Art = ({
   art,
@@ -12,55 +15,38 @@ const Art = ({
   handleTabClick,
 }) => {
   //   const { title, creator, imageUrl, user } = art;
-  const [isSaved, setIsSaved] = useState(false);
-  const { user: currentUser, setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
-  // const handleSavedClick = async (e) => {
-  //   e.stopPropagation();
+  const { totalArts, updateTotalArts } = useContext(TotalArtsContext);
 
-  //   try {
-  //     const token = localStorage.getItem("token");
-  //     if (!token) {
-  //       // Handle case when user is not logged in
-  //       return;
-  //     }
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  //     if (isSaved) {
-  //       // Remove saved arts
-  //       await axios.delete(`http://localhost:3001/api/arts/save/${art._id}`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
+  const handleDeleteClick = () => {
+    setIsDeleteModalOpen(true);
+  };
 
-  //       setUser((prevUser) => ({
-  //         ...prevUser,
-  //         savedPosts: prevUser.savedPosts.filter((artId) => artId !== art._id),
-  //       }));
-  //       setIsSaved(false);
-  //     } else {
-  //       // save arts
-  //       await axios.post(
-  //         `http://localhost:3001/api/arts/save/${art._id}`,
-  //         null,
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         }
-  //       );
+  const handleCloseDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+  };
 
-  //       setUser((prevUser) => ({
-  //         ...prevUser,
-  //         savedPosts: [...prevUser.savedPosts, art._id],
-  //       }));
-  //       setIsSaved(true);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     // Handle error
-  //   }
-  // };
+  const handleConfirmDelete = (e) => {
+    // e.stopPropagation();
+    axios
+      .delete(`http://localhost:3001/api/arts/${art.id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then(() => {
+        console.log("Art deleted successfully!");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    updateTotalArts(totalArts - 1);
+  };
 
   function getTimeDifferenceString(dateString) {
     const targetDate = new Date(dateString);
@@ -81,7 +67,7 @@ const Art = ({
     return formattedTime;
   }
 
-  console.log(art);
+  // console.log(art);
 
   const isArtDatePassed = new Date(art?.endingDate) < new Date();
 
@@ -90,13 +76,6 @@ const Art = ({
       <div className="">
         <div
           className={`cursor-pointer relative w-full bg-dark-slate-85 dark:bg-black-75 rounded-xl transition duration-200 ${isArtDatePassed ? "" : "hover:scale-[1.01]"} `}
-          onClick={() => {
-            if (art.artType === "Upcoming") {
-              handleTabClick("upcoming");
-            } else if (!isArtDatePassed) {
-              window.location.href = `/art-details/${art?._id || art?.id}`;
-            }
-          }}
         >
           <div className="relative w-fit bg-light-slate dark:bg-black-75 rounded-lg flex flex-col transition duration-200 pb-4">
             <img
@@ -118,9 +97,33 @@ const Art = ({
                 <p className="text-sm font-medium vsm:text-base">
                   {art?.startingBid}$
                 </p>
-                <button className={`text-sm text-white flex items-center bg-blue-dark dark:bg-pink-light dark:border-light-color dark:text-black p-1 rounded-md vsm:px-3 ${isArtDatePassed ? "pointer-events-none" : ""}`}>
-                  BID NOW
-                </button>
+                {user?.data[0].userType !== "admin" ? (
+                  <>
+                    <button className={`text-sm text-white flex items-center bg-blue-dark dark:bg-pink-light dark:border-light-color dark:text-black p-1 rounded-md vsm:px-3 ${isArtDatePassed ? "pointer-events-none" : ""}`}
+                    onClick={() => {
+                      if (art.artType === "Upcoming") {
+                        handleTabClick("upcoming");
+                      } else if (!isArtDatePassed) {
+                        window.location.href = `/art-details/${art?._id || art?.id}`;
+                      }
+                    }}
+                    >
+                      BID NOW
+                    </button>
+                  </>
+
+                ):(
+                  <>
+                    {/* <button className={`text-sm text-white flex items-center bg-blue-dark dark:bg-pink-light dark:border-light-color dark:text-black p-1 rounded-md vsm:px-3 ${isArtDatePassed ? "pointer-events-none" : ""}`}>
+                      EDIT
+                    </button> */}
+                    <button className={`text-sm text-white flex items-center bg-blue-dark hover:bg-pale-red dark:bg-pink-light dark:border-light-color dark:text-black py-2 px-0 rounded-lg vsm:px-3 ${isArtDatePassed ? "pointer-events-none" : ""}`}
+                    onClick={handleDeleteClick}
+                    >
+                      <MdDelete className="w-5 h-5" />
+                    </button>
+                  </>
+                )}
               </div>
               <p className="text-sm font-medium vsm:text-base">
                 {art?.creator}
@@ -129,6 +132,48 @@ const Art = ({
           </div>
         </div>
       </div>
+      {isDeleteModalOpen && (
+        <div className="bg-[#000000cb] text-white fixed top-0 left-0 z-50 w-full h-full flex flex-col items-center justify-center">
+          {/* Delete confirmation modal */}
+          <div className="modal relative w-full max-w-2xl overflow-auto">
+            <div className="relative py-10 mx-5 bg-light-color p-4 rounded-xl shadow dark:bg-blue-dark">
+              <button className="absolute top-3 right-4">
+                <IoClose
+                  onClick={handleCloseDeleteModal}
+                  className="w-7 h-7 dark:text-white text-black transition duration-300"
+                />
+              </button>
+
+              <p className="text-2xl dark:text-white text-black font-medium text-center mb-4">
+                Delete Art
+              </p>
+
+              <p className="text-sm text-black dark:text-white text-center">
+                Are you sure you want to delete this art?
+              </p>
+
+              <div className="flex justify-center gap-6 mt-6">
+                <button
+                   onClick={() => {
+                    handleConfirmDelete();
+                    handleCloseDeleteModal();
+                  }}
+                  className="px-4 py-2 rounded-lg bg-blue-dark text-white hover:text-lime-green hover:bg-black-75 text-base font-medium transition duration-300"
+                >
+                  Delete
+                </button>
+
+                <button
+                  onClick={handleCloseDeleteModal}
+                  className="px-4 py-2 rounded-lg bg-blue-dark text-white text-base font-medium transition duration-300 hover:text-pale-red hover:bg-light-slate"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

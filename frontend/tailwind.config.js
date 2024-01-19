@@ -16,6 +16,7 @@ module.exports = {
       black: "#000",
       white: "#fff",
       yellow: "#82960C",
+      blue: "#485B76",
 
       // Light Mode Colors
       "light-bg": "#F9F4F0",

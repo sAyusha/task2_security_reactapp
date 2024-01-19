@@ -4,6 +4,7 @@ import { FiArrowRightCircle } from "react-icons/fi";
 import { UserContext } from "../../context/UserContext";
 import CategoriesBody from "./CategoriesBody";
 import UpcomingArts from "./UpcomingArts";
+import { useNavigate } from "react-router-dom";
 
 const HomepageBody = ({
   handleArtClick,
@@ -14,6 +15,7 @@ const HomepageBody = ({
 }) => {
   const { user } = useContext(UserContext);
   const [arts, setArts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -125,6 +127,25 @@ const HomepageBody = ({
                 handleTabClick={handleTabClick}
               />
             ))}
+          </div>
+          <hr className="mt-4 border-1 border-light-slate"></hr>
+          <div className="flex justify-center items-center flex-col p-2 gap-2 mt-2">
+            <h3 className="laila">Sell Your Own Artwork</h3>
+            <p className="text-medium md:block lg:block vsm:hidden text-black dark:text-dark-slate-85">
+              Let our experts find the best sales option for you to direct listing on Artalyst.
+            </p>
+            <button
+              className="text-semibold bg-blue-dark text-white hover:bg-black-75 p-2 flex items-center gap-2 px-2 py-1.5 rounded-lg vsm:px-3 vsm:text-base"
+              onClick={() => {
+                if (user) {
+                  handleTabClick("create");
+                } else {
+                  navigate("/please-login");
+                }
+              }}
+            >
+              Submit
+            </button>
           </div>
         </div>
       </div>

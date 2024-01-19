@@ -33,6 +33,7 @@ const MainPage = () => {
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
     setSelectedArt(null);
+    localStorage.setItem("activeTab", tabName);
   };
 
   const handleArtClick = (art) => {
@@ -142,10 +143,18 @@ const MainPage = () => {
     },
     profile: {
       header: "Profile",
-      body: <ProfileBody />,
+      body: <ProfileBody
+        userInfo={userInfo}
+        fetchUserInfo={fetchUserInfo}
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+      />,
     },
     settings: {
-      body: <SettingsBody />,
+      body: <SettingsBody
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+      />,
     },
     artDetails: {
       header: "Art Details",
@@ -159,7 +168,10 @@ const MainPage = () => {
     },
     dashboard: {
       header: "Admin Dashboard",
-      body: <Dashboard />,
+      body: <Dashboard
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+      />,
     },
   };
 

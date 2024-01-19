@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "./Button";
 // import ChangePassword from "./ChangePassword";
 // import EditProfile from "./EditProfile";
@@ -13,10 +13,12 @@ import AlertedArts from "./AlertedArts";
 import SavedArts from "./SavedArts";
 import UserInfo from "./UserInfo";
 import YourArts from "./YourArts";
+import { UserContext } from "../../context/UserContext";
 
-const ProfileBody = () => {
+const ProfileBody = ({ activeTab, handleTabClick }) => {
   const [activeButton, setActiveButton] = useState("Posts");
   const [myArts, setMyArts] = useState([]);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     axios
@@ -50,12 +52,44 @@ const ProfileBody = () => {
 
   return (
     <div className="mt-5 mb-16 flex flex-col xl:flex-column">
-      <UserInfo myArts={myArts} />
+      <UserInfo
+        myArts={myArts}
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+      />
 
       <div className="border-b border-light-slate w-full"></div>
 
       <div className="w-full flex flex-col gap-6">
-        <div className="flex flex-wrap gap-2 md:gap-[8rem] vsm:gap-[2rem] justify-center">
+        {user?.data[0]?.userType !== "admin" ? (
+          <div className="flex flex-wrap gap-2 md:gap-[8rem] vsm:gap-[2rem] justify-center">
+            <div className="cursor-pointer flex flex-row items-center border-t-2 text-dark-slate border-dark-slate hover:text-black ">
+              <BsFillFilePostFill className="md:w-6 h-6 mt-2" />
+              <Button
+                btnName="Posts"
+                activeButton={activeButton}
+                handleButtonClick={handleButtonClick}
+              />
+            </div>
+            <div className="cursor-pointer flex flex-row items-center border-t-2 text-dark-slate border-dark-slate hover:text-black">
+              <BsFillBookmarkFill className="md:w-6 h-6 mt-2" />
+              <Button
+                btnName="Saved"
+                activeButton={activeButton}
+                handleButtonClick={handleButtonClick}
+              />
+            </div>
+
+            <div className="cursor-pointer flex flex-row items-center border-t-2 text-dark-slate border-dark-slate hover:text-black ">
+              <MdCircleNotifications className="md:w-7 h-6 mt-2" />
+              <Button
+                btnName="Alerts"
+                activeButton={activeButton}
+                handleButtonClick={handleButtonClick}
+              />
+            </div>
+          </div>
+        ) :
           <div className="cursor-pointer flex flex-row items-center border-t-2 text-dark-slate border-dark-slate hover:text-black ">
             <BsFillFilePostFill className="md:w-6 h-6 mt-2" />
             <Button
@@ -64,23 +98,7 @@ const ProfileBody = () => {
               handleButtonClick={handleButtonClick}
             />
           </div>
-          <div className="cursor-pointer flex flex-row items-center border-t-2 text-dark-slate border-dark-slate hover:text-black ">
-            <BsFillBookmarkFill className="md:w-6 h-6 mt-2" />
-            <Button
-              btnName="Saved"
-              activeButton={activeButton}
-              handleButtonClick={handleButtonClick}
-            />
-          </div>
-          <div className="cursor-pointer flex flex-row items-center border-t-2 text-dark-slate border-dark-slate hover:text-black ">
-            <MdCircleNotifications className="md:w-7 h-6 mt-2" />
-            <Button
-              btnName="Alerts"
-              activeButton={activeButton}
-              handleButtonClick={handleButtonClick}
-            />
-          </div>
-        </div>
+        }
 
         {formComponent}
       </div>

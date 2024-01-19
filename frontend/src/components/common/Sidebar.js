@@ -2,17 +2,20 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { BiBarChartSquare } from "react-icons/bi";
 import { BsFillSunFill, BsMoonFill } from "react-icons/bs";
-import { FiBookmark, FiHome, FiSearch, FiSettings } from "react-icons/fi";
 import {
   MdAddCircleOutline,
   MdOutlineArrowBackIosNew,
+  MdOutlineDashboard,
   MdOutlineExplore,
+  MdOutlineHome,
   MdOutlineLightMode,
+  MdOutlineSearch,
+  MdOutlineSettings,
+  MdOutlineBookmarkBorder
 } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { VscMenu } from "react-icons/vsc";
 import { UserContext } from "../../context/UserContext";
-import { RxDashboard } from "react-icons/rx";
 
 const Sidebar = ({ activeTab, handleTabClick }) => {
   const { user } = useContext(UserContext);
@@ -55,7 +58,7 @@ const Sidebar = ({ activeTab, handleTabClick }) => {
 
     // Calculate the position relative to the "More" button
     const moreButtonRect = event.currentTarget.getBoundingClientRect();
-    const dropdownHeight = 250;
+    const dropdownHeight = 200;
 
     setDropdownPosition({
       x: moreButtonRect.left,
@@ -70,7 +73,7 @@ const Sidebar = ({ activeTab, handleTabClick }) => {
 
     // Use the same position calculated for dropdownPosition
     const switchButtonRect = event.currentTarget.getBoundingClientRect();
-    const dropdownHeight = 250;
+    const dropdownHeight = 300;
 
     // Calculate the position for the second dropdown (dropdownPosition2)
     setDropdownPosition2({
@@ -120,7 +123,7 @@ const Sidebar = ({ activeTab, handleTabClick }) => {
                   }`}
                 onClick={() => handleTabClick("dashboard")}
               >
-                <RxDashboard className="w-6 h-6" />
+                <MdOutlineDashboard className="w-6 h-6" />
                 <p className="hidden font-semibold md-2:block">Dashboard</p>
 
                 {activeTab === "dashboard" && (
@@ -129,35 +132,45 @@ const Sidebar = ({ activeTab, handleTabClick }) => {
               </li>
             )}
 
-            <li
-              className={`relative hover:text-blue-dark vsm:hover:dark:text-pink-light md-2:hover:dark:text-blue-dark cursor-pointer transition duration-200 ease-linear md-2:text-black md-2:flex md-2:items-center md-2:gap-3 md-2:w-full md-2:px-4 md-2:py-2.5 md-2:rounded-md-2 md-2:hover:bg-pink-light ${activeTab === "home"
-                ? "text-blue-dark vsm:dark:text-pink-light md-2:dark:text-blue-dark md-2:text-blue-dark md-2:bg-pink-light !impo"
-                : "text-black dark:text-white"
-                }`}
-              onClick={() => handleTabClick("home")}
-            >
-              <FiHome className="w-6 h-6" />
-              <p className="hidden font-semibold md-2:block">Home</p>
+            {user?.data[0].userType !== "admin" && (
+              <>
 
-              {activeTab === "home" && (
-                <div className="md-2:bg-black vsm:dark:bg-pink md-2:dark:bg-white dark:w-[3px] h-full w-[2px] absolute left-0"></div>
-              )}
-            </li>
+                <li
+                  className={`relative hover:text-blue-dark vsm:hover:dark:text-pink-light md-2:hover:dark:text-blue-dark cursor-pointer transition duration-200 ease-linear md-2:text-black md-2:flex md-2:items-center md-2:gap-3 md-2:w-full md-2:px-4 md-2:py-2.5 md-2:rounded-md-2 md-2:hover:bg-pink-light ${activeTab === "home"
+                    ? "text-blue-dark vsm:dark:text-pink-light md-2:dark:text-blue-dark md-2:text-blue-dark md-2:bg-pink-light !impo"
+                    : "text-black dark:text-white"
+                    }`}
+                  onClick={() => handleTabClick("home")}
+                >
+                  <MdOutlineHome className="w-6 h-6" />
+                  <p className="hidden font-semibold md-2:block">Home</p>
 
-            <li
-              className={`relative hover:text-blue-dark vsm:hover:dark:text-pink-light md-2:hover:dark:text-blue-dark cursor-pointer transition duration-200 ease-linear md-2:text-black md-2:flex md-2:items-center md-2:gap-3 md-2:w-full md-2:px-4 md-2:py-2.5 md-2:rounded-md-2 md-2:hover:bg-pink-light ${activeTab === "search"
-                ? "text-blue-dark vsm:dark:text-pink-light md-2:dark:text-blue-dark md-2:text-blue-dark md-2:bg-pink-light !impo"
-                : "text-black dark:text-white"
-                }`}
-              onClick={() => handleTabClick("search")}
-            >
-              <FiSearch className="w-6 h-6" />
-              <p className="hidden font-semibold md-2:block">Search</p>
+                  {activeTab === "home" && (
+                    <div className="md-2:bg-black vsm:dark:bg-pink md-2:dark:bg-white dark:w-[3px] h-full w-[2px] absolute left-0"></div>
+                  )}
+                </li>
+              </>
+            )}
 
-              {activeTab === "search" && (
-                <div className="md-2:bg-black vsm:dark:bg-pink md-2:dark:bg-white dark:w-[3px] h-full w-[2px] absolute left-0"></div>
-              )}
-            </li>
+            {user?.data[0].userType !== "admin" && (
+              <>
+
+                <li
+                  className={`relative hover:text-blue-dark vsm:hover:dark:text-pink-light md-2:hover:dark:text-blue-dark cursor-pointer transition duration-200 ease-linear md-2:text-black md-2:flex md-2:items-center md-2:gap-3 md-2:w-full md-2:px-4 md-2:py-2.5 md-2:rounded-md-2 md-2:hover:bg-pink-light ${activeTab === "search"
+                    ? "text-blue-dark vsm:dark:text-pink-light md-2:dark:text-blue-dark md-2:text-blue-dark md-2:bg-pink-light !impo"
+                    : "text-black dark:text-white"
+                    }`}
+                  onClick={() => handleTabClick("search")}
+                >
+                  <MdOutlineSearch className="w-6 h-6" />
+                  <p className="hidden font-semibold md-2:block">Search</p>
+
+                  {activeTab === "search" && (
+                    <div className="md-2:bg-black vsm:dark:bg-pink md-2:dark:bg-white dark:w-[3px] h-full w-[2px] absolute left-0"></div>
+                  )}
+                </li>
+              </>
+            )}
 
             {user?.data[0].userType !== "admin" && (
               <>
@@ -217,6 +230,24 @@ const Sidebar = ({ activeTab, handleTabClick }) => {
               </>
             )}
 
+            {user?.data[0].userType === "admin" && (
+              <> <li
+                className={`relative hover:text-blue-dark vsm:hover:dark:text-pink-light md-2:hover:dark:text-blue-dark cursor-pointer transition duration-200 ease-linear md-2:text-black md-2:flex md-2:items-center md-2:gap-3 md-2:w-full md-2:px-4 md-2:py-2.5 md-2:rounded-md-2 md-2:hover:bg-pink-light ${activeTab === "updates"
+                  ? "text-blue-dark vsm:dark:text-pink-light md-2:dark:text-blue-dark md-2:text-blue-dark md-2:bg-pink-light !impo"
+                  : "text-black dark:text-white"
+                  }`}
+                onClick={() => handleTabClick("settings")}
+              >
+                <MdOutlineSettings className="w-6 h-6" />
+                <p className="hidden font-semibold md-2:block">Settings</p>
+
+                {activeTab === "settings" && (
+                  <div className="md-2:bg-black vsm:dark:bg-pink md-2:dark:bg-white dark:w-[3px] h-full w-[2px] absolute left-0"></div>
+                )}
+              </li>
+              </>
+            )}
+
             <li
               className={`relative hover:text-blue-dark vsm:hover:dark:text-pink-light md-2:hover:dark:text-blue-dark cursor-pointer transition duration-200 ease-linear md-2:text-black md-2:flex md-2:items-center md-2:gap-3 md-2:w-full md-2:px-4 md-2:py-2.5 md-2:rounded-md-2 md-2:hover:bg-pink-light ${activeTab === "profile"
                 ? "text-blue-dark vsm:dark:text-pink-light md-2:dark:text-blue-dark md-2:text-blue-dark md-2:bg-pink-light !impo"
@@ -270,22 +301,26 @@ const Sidebar = ({ activeTab, handleTabClick }) => {
             zIndex: 100,
           }}
         >
-          <div className="flex flex-row items-center mx-2 mb-1 px-4 py-2 text-black text-sm dark:text-white hover:bg-light-slate hover:dark:bg-blue-dark hover:rounded-md">
-            <FiSettings className="w-4 h-4 mr-2" />
-            <button
-              className="block flex-1 text-left"
-              onClick={() => {
-                if (user) {
-                  handleTabClick("settings");
-                } else {
-                  navigate("/please-login");
-                }
-                closeDropdown();
-              }}
-            >
-              Settings
-            </button>
-          </div>
+          {user?.data[0].userType !== "admin" && (
+            <>
+              <div className="flex flex-row items-center mx-2 mb-1 px-4 py-2 text-black text-sm dark:text-white hover:bg-light-slate hover:dark:bg-blue-dark hover:rounded-md">
+                <MdOutlineSettings className="w-4 h-4 mr-2" />
+                <button
+                  className="block flex-1 text-left"
+                  onClick={() => {
+                    if (user) {
+                      handleTabClick("settings");
+                    } else {
+                      navigate("/please-login");
+                    }
+                    closeDropdown();
+                  }}
+                >
+                  Settings
+                </button>
+              </div>
+            </>
+          )}
 
           <div
             ref={dropdownRef2}
@@ -302,44 +337,35 @@ const Sidebar = ({ activeTab, handleTabClick }) => {
             </button>
           </div>
 
-          <div
-            className="flex flex-row items-center mx-2 mb-1 px-4 py-2 text-sm text-black dark:text-white hover:bg-light-slate hover:dark:bg-blue-dark hover:rounded-md"
-            onClick={() => {
-              if (user) {
-                handleTabClick("profile");
-              } else {
-                navigate("/please-login");
-              } closeDropdown();
-            }}
-          >
-            <FiBookmark className="w-4 h-4 mr-2" />
-            <button
-              className="block flex-1 text-left"
-              onClick={() => {
-                if (user) {
-                  handleTabClick("saved");
-                } else {
-                  navigate("/please-login");
-                }
-                closeDropdown();
-              }}
-            >
-              Saved
-            </button>
-          </div>
-
-          {/* <div className="flex flex-row items-center mx-2 mb-2 px-4 py-2 text-sm text-black dark:text-white hover:bg-light-slate hover:dark:bg-blue-dark hover:rounded-md">
-            <MdOutlineReport className="w-5 h-5 mr-2" />
-            <button
-              className="block flex-1 text-left"
-              onClick={() => {
-                handleTabClick("report");
-                closeDropdown();
-              }}
-            >
-              Report a problem
-            </button>
-          </div> */}
+          {user?.data[0].userType !== "admin" && (
+            <>
+              <div
+                className="flex flex-row items-center mx-2 mb-1 px-4 py-2 text-sm text-black dark:text-white hover:bg-light-slate hover:dark:bg-blue-dark hover:rounded-md"
+                onClick={() => {
+                  if (user) {
+                    handleTabClick("profile");
+                  } else {
+                    navigate("/please-login");
+                  } closeDropdown();
+                }}
+              >
+                <MdOutlineBookmarkBorder className="w-4 h-4 mr-2" />
+                <button
+                  className="block flex-1 text-left"
+                  onClick={() => {
+                    if (user) {
+                      handleTabClick("saved");
+                    } else {
+                      navigate("/please-login");
+                    }
+                    closeDropdown();
+                  }}
+                >
+                  Saved
+                </button>
+              </div>
+            </>
+          )}
 
           <div className="border-t-2 border-light-slate"></div>
 

@@ -113,7 +113,7 @@ export default function AddressModal({ artDetail, artOwner, amount, onClose }) {
         const data = {
           orderItems,
           shippingAddress: {
-            fullname: artOwner[0]?.fullname,
+            // fullname: artOwner[0]?.fullname,
             address,
             postalCode,
             city,
@@ -215,7 +215,7 @@ export default function AddressModal({ artDetail, artOwner, amount, onClose }) {
           {isModalOpen && (
             <PaymentSummaryModal
               artDetail={artDetail}
-              artOwner={artOwner}
+              // artOwner={artOwner}
               amount={amount}
               orderId={orderId}
               onClose={() => setIsModalOpen(false)} // Close the modal when the close button is clicked
