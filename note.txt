@@ -1,6 +1,12 @@
 1. app.js --> verify user hatako
 2. upcoming body, home page ma  get - http/others ko satta api/arts/ matra use gareko
 3. In homepage body, line 119 ._id --> id
+-----
+for admin 
+1. models --> user.js --> userType,
+2. added admin routes
+3. in app.js added admin route
+4. added admin controller
 
 ---
  onClick={() => {

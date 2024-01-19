@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const morgan = require("morgan");
+// const morgan = require("morgan");
 
 // Route files
 const userRoutes = require("./routes/user_routes");
@@ -38,6 +38,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/arts", artRoutes);
 app.use("/api/bids", verifyUser, bidRoutes);
 app.use("/api/orders", verifyUser, orderRoutes);
+app.use("/api/admin", verifyUser, adminRoutes);
+
 // app.use(verifyUser);
 
 // Error handling middleware
