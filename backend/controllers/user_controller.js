@@ -30,8 +30,8 @@ const registerUser = async (req, res, next) => {
     }
 
     // Check for phone number length
-    const minimum = 10;
-    if (phone.length < minimum) {
+    // const minimum = 10;
+    if (phone.length < 10 && phone.length > 10) {
       return res.status(400).json({
         error: `Phone number should at least be ${minLength} numbers.`,
       });

@@ -275,6 +275,8 @@ const ArtDetails = ({ userInfo, fetchUserInfo, art }) => {
         console.log(usersInfoObject);
 
         setFilteredBids(filteredBidsData);
+         // Log the filtered bid data
+      console.log("Filtered Bids:", filteredBidsData);
       } catch (error) {
         console.log(error);
       }

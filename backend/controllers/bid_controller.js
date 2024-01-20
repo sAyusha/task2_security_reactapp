@@ -1,15 +1,20 @@
 const User = require("../models/user");
 const Bid = require("../models/bid");
 const Art = require("../models/art");
-const crypto = require('crypto');
-const algorithm = 'aes-256-cbc';
-const secretKey = 'asdfghjklminubyvtcrxe0864213579'; // Replace with your secret key
-const iv = crypto.randomBytes(16);
+const crypto = require("crypto");
+const algorithm = "aes-256-cbc";
 
 const encrypt = (data) => {
-  const cipher = crypto.createCipheriv(algorithm, Buffer.from(secretKey), iv);
+  // Generate a random 256-bit key each time
+  const secretKey = crypto.randomBytes(32);
+  // console.log('Generated Key:', secretKey.toString('hex'));
+
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
+
   let encrypted = cipher.update(JSON.stringify(data), 'utf-8', 'hex');
   encrypted += cipher.final('hex');
+
   return {
     iv: iv.toString('hex'),
     encryptedData: encrypted,
@@ -19,7 +24,7 @@ const encrypt = (data) => {
 const decrypt = (data) => {
   const decipher = crypto.createDecipheriv(
     algorithm,
-    Buffer.from(secretKey),
+    Buffer.from(secretKey, 'hex'),
     Buffer.from(data.iv, 'hex')
   );
   let decrypted = decipher.update(data.encryptedData, 'hex', 'utf-8');
@@ -27,29 +32,48 @@ const decrypt = (data) => {
   return JSON.parse(decrypted);
 };
 
-// const getAllBids = async (req, res, next) => {
-//   try {
-//     // Retrieve all bids from the database
-//     const allBids = await Bid.find();
+const getBid = async (req, res, next) => {
+  try {
+    const bidId = req.params.bid_id;
 
-//     // Return the array of all bids
-//     return res.status(200).json({ data: allBids });
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).json({ message: "Internal server error" });
-//   }
-// };
+    // Retrieve the bid from the database using the bidId
+    const bid = await Bid.findById(bidId)
+      .populate({
+        path: 'bidArt',
+        populate: {
+          path: 'highestBidder', // Populate the highestBidder field from the artSchema
+          model: 'User',
+        },
+      })
+      .populate('user'); // Populate the user field from the bidSchema
+
+    if (!bid) {
+      return res.status(404).json({ message: 'Bid not found' });
+    }
+
+    // Encrypt sensitive bid data
+    const encryptedBid = encrypt(bid);
+
+    // Return the bid information along with the highest bid amount for the art
+    return res.status(200).json({
+      data: [encryptedBid],
+      highestBidAmount: bid.bidArt.highestBidAmount,
+      highestBidder: bid.bidArt.highestBidder,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 
 const getAllBids = async (req, res, next) => {
   try {
     // Retrieve all bids from the database
     const allBids = await Bid.find();
 
-    // Encrypt the bid data before sending it in the response
-    const encryptedBids = allBids.map(encrypt);
-
-    // Return the array of all encrypted bids
-    return res.status(200).json({ data: encryptedBids });
+    // Return the array of all bids
+    return res.status(200).json({ data: allBids });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
@@ -152,39 +176,6 @@ const placeBid = async (req, res, next) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
-  }
-};
-
-const getBid = async (req, res, next) => {
-  try {
-    const bidId = req.params.bid_id;
-
-    // Retrieve the bid from the database using the bidId
-    const bid = await Bid.findById(bidId)
-      .populate({
-        path: "bidArt",
-        populate: {
-          path: "highestBidder", // Populate the highestBidder field from the artSchema
-          model: "User",
-        },
-      })
-      .populate("user"); // Populate the user field from the bidSchema
-
-    if (!bid) {
-      return res.status(404).json({ message: "Bid not found" });
-    }
-
-    // Return the bid information along with the highest bid amount for the art
-    return res.status(200).json({
-      data: [bid],
-      highestBidAmount: bid.bidArt.highestBidAmount,
-      highestBidder: bid.bidArt.highestBidder,
-    });
-  } catch (error) {
-    console.error(error);
-    return res
-      .status(500)
-      .json({ message: "Internal server error", data: newBid });
   }
 };
 

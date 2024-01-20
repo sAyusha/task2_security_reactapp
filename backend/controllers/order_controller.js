@@ -1,6 +1,34 @@
 const Order = require('../models/order');
 const User = require('../models/user')
 const Art = require('../models/art')
+const crypto = require('crypto'); 
+const algorithm = 'aes-256-cbc';
+
+const encrypt = (data) => {
+   // Generate a random 256-bit key each time
+   const secretKey = crypto.randomBytes(32);
+   // console.log('Generated Key:', secretKey.toString('hex'));
+ 
+   const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipheriv(algorithm, Buffer.from(secretKey), iv);
+  let encrypted = cipher.update(JSON.stringify(data), 'utf-8', 'hex');
+  encrypted += cipher.final('hex');
+  return {
+    iv: iv.toString('hex'),
+    encryptedData: encrypted,
+  };
+};
+
+const decrypt = (data) => {
+  const decipher = crypto.createDecipheriv(
+    algorithm,
+    Buffer.from(secretKey),
+    Buffer.from(data.iv, 'hex')
+  );
+  let decrypted = decipher.update(data.encryptedData, 'hex', 'utf-8');
+  decrypted += decipher.final('utf-8');
+  return JSON.parse(decrypted);
+};
 
 const getAllOrder = async (req, res) => {
     try{
@@ -57,12 +85,15 @@ const getMine = async (req, res, next) => {
           };
         });
 
+        // Encrypt the shippingAddress before storing it in orderData
+        const encryptedShippingAddress = encrypt(order.shippingAddress);
+
         const items = await Promise.all(orderItems);
 
         return {
           _id: order._id,
           bidAmount: order.bidAmount,
-          shippingAddress: order.shippingAddress,
+          shippingAddress: encryptedShippingAddress,
           paymentMethod: order.paymentMethod,
           shippingPrice: order.shippingPrice,
           totalAmount: order.totalAmount,
