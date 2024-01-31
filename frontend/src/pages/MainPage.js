@@ -46,7 +46,7 @@ const MainPage = () => {
       const token = localStorage.getItem("token");
       if (token) {
         // If token exists, fetch the user data
-        const response = await axios.get(`http://localhost:3001/api/users/`, {
+        const response = await axios.get(`https://localhost:3001/api/users/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

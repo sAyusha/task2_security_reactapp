@@ -18,7 +18,7 @@ const UpdateArtBody = ({ art, closeModal }) => {
     useEffect(() => {
         if (art.id) {
             axios
-                .get(`http://localhost:3001/api/arts/${art.id}`, {
+                .get(`https://localhost:3001/api/arts/${art.id}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
@@ -58,7 +58,7 @@ const UpdateArtBody = ({ art, closeModal }) => {
         e.preventDefault();
         axios
             .put(
-                `http://localhost:3001/api/arts/${art.id}`,
+                `https://localhost:3001/api/arts/${art.id}`,
                 {
                     // image: filename,
                     title,

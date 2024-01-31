@@ -127,7 +127,7 @@ export default function AddressModal({ artDetail, artOwner, amount, onClose }) {
         };
 
         const response = await axios.post(
-          `http://localhost:3001/api/orders/${artDetail[0]?.id}/order`,
+          `https://localhost:3001/api/orders/${artDetail[0]?.id}/order`,
           data,
           {
             headers: {

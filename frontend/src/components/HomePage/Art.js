@@ -33,7 +33,7 @@ const Art = ({
   const handleConfirmDelete = (e) => {
     // e.stopPropagation();
     axios
-      .delete(`http://localhost:3001/api/arts/${art.id}`, {
+      .delete(`https://localhost:3001/api/arts/${art.id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -79,7 +79,7 @@ const Art = ({
         >
           <div className="relative w-fit bg-light-slate dark:bg-black-75 rounded-lg flex flex-col transition duration-200 pb-4">
             <img
-              src={`http://localhost:3001/uploads/${art.image}`}
+              src={`https://localhost:3001/uploads/${art.image}`}
               alt="Art"
               className="border border-light-slate rounded-lg w-[500px] h-[250px] md:w-[500px] md:h-[250px] vsm:w-100vw vsm:h-100vh object-fill"
             />

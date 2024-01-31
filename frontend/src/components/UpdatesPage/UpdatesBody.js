@@ -13,7 +13,7 @@ export default function NotificationBody() {
   useEffect(() => {
     // Fetch bids from the API
     axios
-      .get(`http://localhost:3001/api/bids`, {
+      .get(`https://localhost:3001/api/bids`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -27,7 +27,7 @@ export default function NotificationBody() {
 
     // Fetch user's orders from the API
     axios
-      .get(`http://localhost:3001/api/orders/mine`, {
+      .get(`https://localhost:3001/api/orders/mine`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -103,7 +103,7 @@ export default function NotificationBody() {
                 <div className="flex flex-row pt-4 gap-2 md:flex-row vsm:flex-col w-full">
                   <img
                     src={order.orderItems.map(
-                      (item) => `http://localhost:3001/uploads/${item.image}`
+                      (item) => `https://localhost:3001/uploads/${item.image}`
                     )}
                     className="md:w-[250px] w-[250px] vsm:w-full rounded-lg h-[250px] object-fill"
                     alt="img"

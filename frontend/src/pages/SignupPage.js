@@ -28,7 +28,7 @@ export default function SignupPage() {
     const passwordScore = zxcvbn(password);
     setPasswordStrength(passwordScore.score);
     axios
-      .post("http://localhost:3001/api/users/register", {
+      .post("https://localhost:3001/api/users/register", {
         fullname,
         username,
         email,

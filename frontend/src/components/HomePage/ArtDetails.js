@@ -58,7 +58,7 @@ const ArtDetails = ({ userInfo, fetchUserInfo, art }) => {
   }, [currentUser, artId]);
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/arts/${artId}`, {
+      .get(`https://localhost:3001/api/arts/${artId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

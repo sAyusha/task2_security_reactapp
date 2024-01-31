@@ -102,7 +102,7 @@ describe("Login Page", () => {
 
     // Wait for the API call to complete=
     await waitFor(() => {
-      expect(window.location.href).toBe("http://localhost/");
+      expect(window.location.href).toBe("https://localhost/");
     });
   });
 });

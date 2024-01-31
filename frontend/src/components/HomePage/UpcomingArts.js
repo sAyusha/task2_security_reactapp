@@ -50,7 +50,7 @@ const UpcomingArts = ({
         if (isAlert) {
           // Remove alert
           await axios
-            .delete(`http://localhost:3001/api/arts/alert/${art.id}`, {
+            .delete(`https://localhost:3001/api/arts/alert/${art.id}`, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -61,7 +61,7 @@ const UpcomingArts = ({
 
               axios
                 .get(
-                  `http://localhost:3001/api/users/${currentUser?.data[0].id}`,
+                  `https://localhost:3001/api/users/${currentUser?.data[0].id}`,
                   {
                     headers: {
                       Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -81,7 +81,7 @@ const UpcomingArts = ({
         } else {
           // Add alert
           await axios
-            .post(`http://localhost:3001/api/arts/alert/${art.id}`, null, {
+            .post(`https://localhost:3001/api/arts/alert/${art.id}`, null, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -92,7 +92,7 @@ const UpcomingArts = ({
 
               axios
                 .get(
-                  `http://localhost:3001/api/users/${currentUser?.data[0].id}`,
+                  `https://localhost:3001/api/users/${currentUser?.data[0].id}`,
                   {
                     headers: {
                       Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -180,7 +180,7 @@ const UpcomingArts = ({
         </button>
 
         <img
-          src={`http://localhost:3001/uploads/${art?.image}`}
+          src={`https://localhost:3001/uploads/${art?.image}`}
           alt=""
           className="rounded-lg w-[500px] h-[250px] md:w-[500px] md:h-[250px] vsm:w-100vw vsm:h-100vh object-cover"
         />

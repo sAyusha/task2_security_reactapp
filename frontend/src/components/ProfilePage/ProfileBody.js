@@ -22,7 +22,7 @@ const ProfileBody = ({ activeTab, handleTabClick }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/arts/myArts", {
+      .get("https://localhost:3001/api/arts/myArts", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

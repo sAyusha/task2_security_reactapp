@@ -1,6 +1,6 @@
 import { rest } from "msw";
 
-const API_BASE_URL = "http://localhost:3001/";
+const API_BASE_URL = "https://localhost:3001/";
 
 export const userHandlers = [
   // User registration

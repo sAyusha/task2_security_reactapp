@@ -118,7 +118,7 @@ const AddArtBody = () => {
       formData.append("uploadPictures", artImage);
 
       const response = await axios.post(
-        "http://localhost:3001/api/arts/uploadArtPicture",
+        "https://localhost:3001/api/arts/uploadArtPicture",
         formData,
         {
           headers: {
@@ -143,7 +143,7 @@ const AddArtBody = () => {
 
       // Add the art with the uploaded art image
       await axios.post(
-        "http://localhost:3001/api/arts",
+        "https://localhost:3001/api/arts",
         {
           image: filename,
           title,

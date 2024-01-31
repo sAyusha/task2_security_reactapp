@@ -12,7 +12,7 @@ export default function UpcomingBody() {
       //     Authorization: `Bearer ${localStorage.getItem("token")}`,
       //   },
       // })
-      .get("http://localhost:3001/api/arts", {})
+      .get("https://localhost:3001/api/arts", {})
       .then((res) => {
         setArts(res.data.data);
       })
@@ -57,7 +57,7 @@ export default function UpcomingBody() {
           <div className="w-full border-b border-light-color"></div>
           <div className="flex flex-row pt-4 gap-2 md:flex-row vsm:flex-col w-full">
             <img
-              src={`http://localhost:3001/uploads/${art?.image}`}
+              src={`https://localhost:3001/uploads/${art?.image}`}
               className="md:w-[250px] w-[250px] vsm:w-full rounded-lg h-[250px] object-fill"
               alt="img"
             />

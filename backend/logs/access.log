@@ -326,3 +326,6 @@
 ::1 - - [19/Jan/2024:21:17:49 +0000] "GET /api/orders/mine HTTP/1.1" 200 944 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 ::ffff:127.0.0.1 - - [19/Jan/2024:21:22:16 +0000] "POST /api/users/login HTTP/1.1" 200 901 "-" "Thunder Client (https://www.thunderclient.com)"
 ::ffff:127.0.0.1 - - [19/Jan/2024:21:22:29 +0000] "GET /api/orders/mine HTTP/1.1" 200 944 "-" "Thunder Client (https://www.thunderclient.com)"
+::ffff:127.0.0.1 - - [31/Jan/2024:12:06:16 +0000] "GET /api/users/register HTTP/1.1" 400 107 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0"
+::ffff:127.0.0.1 - - [31/Jan/2024:12:06:28 +0000] "GET / HTTP/1.1" 200 10 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0"
+::ffff:127.0.0.1 - - [31/Jan/2024:12:06:29 +0000] "GET /favicon.ico HTTP/1.1" 404 26 "https://localhost:3001/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0"

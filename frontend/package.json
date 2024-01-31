@@ -9,6 +9,7 @@
     "@testing-library/react": "^13.4.0",
     "axios": "^1.6.5",
     "cors": "^2.8.5",
+    "https": "^1.0.0",
     "khalti-checkout-web": "^2.2.0",
     "react": "^18.2.0",
     "react-datetimepicker": "^2.0.0",
@@ -21,7 +22,7 @@
     "zxcvbn": "^4.4.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set HTTPS=true&& set SSL_CRT_FILE=localhost.crt&& set SSL_KEY_FILE=localhost.key&& react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\"",
     "eject": "react-scripts eject",

@@ -24,7 +24,7 @@ const HomepageBody = ({
       //     Authorization: `Bearer ${localStorage.getItem("token")}`,
       //   },
       // })
-      .get("http://localhost:3001/api/arts", {})
+      .get("https://localhost:3001/api/arts", {})
       .then((res) => {
         setArts(res.data.data);
       })
@@ -80,7 +80,7 @@ const HomepageBody = ({
             </div>
           </div>
           <img
-            src={arts[0] && `http://localhost:3001/uploads/${arts[0].image}`}
+            src={arts[0] && `https://localhost:3001/uploads/${arts[0].image}`}
             className="border border-light-slate w-[350px] h-[225px] object-cover rounded-lg"
             alt=""
           />

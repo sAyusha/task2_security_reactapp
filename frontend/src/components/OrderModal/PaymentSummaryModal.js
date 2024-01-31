@@ -28,7 +28,7 @@ const PaymentSummaryModal = ({
 
     axios
       .put(
-        `http://localhost:3001/api/orders/${orderId}/pay`,
+        `https://localhost:3001/api/orders/${orderId}/pay`,
         {},
         {
           headers: {
@@ -74,7 +74,7 @@ const PaymentSummaryModal = ({
           Payment Summary
         </h3>
         <img
-          src={`http://localhost:3001/uploads/${artDetail[0]?.image}`}
+          src={`https://localhost:3001/uploads/${artDetail[0]?.image}`}
           alt=""
           className="w-full h-60 object-contain mb-4 rounded-lg"
         />

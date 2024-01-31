@@ -18,7 +18,7 @@ const ChangePassword = () => {
 
         try {
             const response = await axios.put(
-                `http://localhost:3001/api/users/updatePassword`,
+                `https://localhost:3001/api/users/updatePassword`,
                 {
                     currentPassword,
                     newPassword,

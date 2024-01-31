@@ -20,7 +20,7 @@ const SearchBody = ({ userInfo, fetchUserInfo, handleArtClick, activeTab, handle
     }
 
     axios
-      .get(`http://localhost:3001/api/arts/search?query=${searchQuery}`, {
+      .get(`https://localhost:3001/api/arts/search?query=${searchQuery}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

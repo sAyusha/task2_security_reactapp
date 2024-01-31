@@ -54,7 +54,7 @@ export default function LoginPage() {
     }
 
     axios
-      .post("http://localhost:3001/api/users/login", { username, password })
+      .post("https://localhost:3001/api/users/login", { username, password })
       .then((response) => {
         console.log(response);
         localStorage.setItem("token", response.data.token);

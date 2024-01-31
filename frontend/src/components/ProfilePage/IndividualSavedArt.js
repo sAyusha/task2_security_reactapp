@@ -42,7 +42,7 @@ const IndividualSavedArt = ({ artId }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/arts/${artId}`, {
+      .get(`https://localhost:3001/api/arts/${artId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -66,7 +66,7 @@ const IndividualSavedArt = ({ artId }) => {
       }
       if (isSaved) {
         // Remove saved art
-        await axios.delete(`http://localhost:3001/api/arts/save/${artId}`, {
+        await axios.delete(`https://localhost:3001/api/arts/save/${artId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -113,7 +113,7 @@ const IndividualSavedArt = ({ artId }) => {
       <img
         src={
           art.data
-            ? `http://localhost:3001/uploads/${art.data[0]?.image}`
+            ? `https://localhost:3001/uploads/${art.data[0]?.image}`
             : "https://odessa-journal.com/public/oj/img/default-image.jpg"
         }
         alt=""
